@@ -13,6 +13,8 @@ import com.welyab.teste.programador.springboottestebasico.application.repositori
 import com.welyab.teste.programador.springboottestebasico.application.repositories.ProdutoRepository;
 import com.welyab.teste.programador.springboottestebasico.application.repositories.tabelas.TProducao;
 import com.welyab.teste.programador.springboottestebasico.application.repositories.tabelas.TProduto;
+import com.welyab.teste.programador.springboottestebasico.application.repositories.tabelas.TProdutoProdutor;
+import com.welyab.teste.programador.springboottestebasico.application.web.request.ProdutorRuralRequest;
 import com.welyab.teste.programador.springboottestebasico.core.model.Producao;
 import com.welyab.teste.programador.springboottestebasico.core.model.Produto;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -56,7 +58,7 @@ public class ProdutorRuralServiceImpl implements ProdutorRuralService {
         }
         TProdutorRural produtorRural = opProdutorRural.get();
         Long totalProducao = producaoRepository.buscarProducao(produtorRural.getId(), data);
-        return BigDecimal.valueOf(totalProducao).divide(
+        return BigDecimal.valueOf(totalProducao == null ? 0L : totalProducao).divide(
                 BigDecimal.valueOf(produtorRural.getAreaPropriedade()),
                 2,
                 RoundingMode.HALF_UP
@@ -85,6 +87,21 @@ public class ProdutorRuralServiceImpl implements ProdutorRuralService {
                 .collect(Collectors.toList());
     }
 
+    @Override
+    public List<Produto> buscarProdutosPorProdutor(String idinscricao) throws ProdutorRuralNaoEncontrado {
+        ProdutorRural produtorRural = buscarProdutorRural(idinscricao);
+        List<TProdutoProdutor> producoes = produtoRepository.buscarProdutosPorProdutor(produtorRural.getInscricao());
+        return producoes.stream().map(p -> toProduto(p)).collect(Collectors.toList());
+    }
+
+    @Override
+    public ProdutorRural atualizaProdutorRural(ProdutorRuralRequest produtorRuralRequest, String inscricao) throws ProdutorRuralNaoEncontrado {
+        Preconditions.checkNotNull(inscricao, "inscricao");
+        produtorRuralRepository.atualizaProdutor(produtorRuralRequest.getNome(), inscricao);
+        Optional<TProdutorRural> optionalProdutorRural = produtorRuralRepository.buscarPorInscricao(inscricao);
+        return toProdutorRural(optionalProdutorRural.get());
+    }
+
     private Producao toProducao(TProducao tProducao, TProduto tProduto) {
         Producao producao = new Producao();
         producao.setProduto(toProduto(tProduto));
@@ -97,6 +114,13 @@ public class ProdutorRuralServiceImpl implements ProdutorRuralService {
         Produto produto = new Produto();
         produto.setId(tProduto.getId());
         produto.setNome(tProduto.getNome());
+        return produto;
+    }
+
+    private Produto toProduto(TProdutoProdutor tProdutoProdutor) {
+        Produto produto = new Produto();
+        produto.setId(tProdutoProdutor.getIdProduto());
+        produto.setNome(tProdutoProdutor.getNome());
         return produto;
     }
 

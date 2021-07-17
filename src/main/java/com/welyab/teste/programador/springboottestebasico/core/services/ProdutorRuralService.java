@@ -1,7 +1,9 @@
 package com.welyab.teste.programador.springboottestebasico.core.services;
 
+import com.welyab.teste.programador.springboottestebasico.application.web.request.ProdutorRuralRequest;
 import com.welyab.teste.programador.springboottestebasico.core.exceptions.ProdutorRuralNaoEncontrado;
 import com.welyab.teste.programador.springboottestebasico.core.model.Producao;
+import com.welyab.teste.programador.springboottestebasico.core.model.Produto;
 import com.welyab.teste.programador.springboottestebasico.core.model.ProdutorRural;
 
 import java.math.BigDecimal;
@@ -15,4 +17,8 @@ public interface ProdutorRuralService {
     BigDecimal calcularProducaoPorHectare(String inscricao, LocalDate data) throws ProdutorRuralNaoEncontrado;
 
     List<Producao> buscarProducao(String inscricao, LocalDate dataInicio, LocalDate dataFim) throws ProdutorRuralNaoEncontrado;
+
+    List<Produto> buscarProdutosPorProdutor(String idinscricao) throws ProdutorRuralNaoEncontrado;
+
+    ProdutorRural atualizaProdutorRural(ProdutorRuralRequest produtorRuralRequest, String inscricao) throws ProdutorRuralNaoEncontrado;
 }

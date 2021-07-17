@@ -81,7 +81,7 @@ public class ProvaConceitosController {
         );
 
         // sua resposta
-        Alternativa alternativaEscolhida = null; // troque null pela sua reposta: a, b, c, d, e
+        Alternativa alternativaEscolhida = b; // troque null pela sua reposta: a, b, c, d, e
         Resposta resposta = new Resposta(pergunta, alternativaEscolhida);
         return ResponseEntity.ok(resposta);
     }
@@ -124,7 +124,7 @@ public class ProvaConceitosController {
         );
 
         // sua resposta
-        Alternativa alternativaEscolhida = null; // troque null pela sua reposta: a, b, c, d, e
+        Alternativa alternativaEscolhida = c; // troque null pela sua reposta: a, b, c, d, e
         Resposta resposta = new Resposta(pergunta, alternativaEscolhida);
         return ResponseEntity.ok(resposta);
     }
@@ -164,7 +164,7 @@ public class ProvaConceitosController {
         );
 
         // sua resposta
-        Alternativa alternativaEscolhida = null; // troque null pela sua reposta: a, b, c, d, e
+        Alternativa alternativaEscolhida = e; // troque null pela sua reposta: a, b, c, d, e
         Resposta resposta = new Resposta(pergunta, alternativaEscolhida);
         return ResponseEntity.ok(resposta);
     }
@@ -229,7 +229,7 @@ public class ProvaConceitosController {
         );
 
         // sua resposta
-        Alternativa alternativaEscolhida = null; // troque null pela sua reposta: a, b, c, d, e
+        Alternativa alternativaEscolhida = c; // troque null pela sua reposta: a, b, c, d, e
         Resposta resposta = new Resposta(pergunta, alternativaEscolhida);
         return ResponseEntity.ok(resposta);
     }
@@ -276,7 +276,7 @@ public class ProvaConceitosController {
         );
 
         // sua resposta
-        Alternativa alternativaEscolhida = null; // troque null pela sua reposta: a, b, c, d, e
+        Alternativa alternativaEscolhida = a; // troque null pela sua reposta: a, b, c, d, e
         Resposta resposta = new Resposta(pergunta, alternativaEscolhida);
         return ResponseEntity.ok(resposta);
     }

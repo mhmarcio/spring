@@ -32,4 +32,35 @@ public class ProdutorRuralControllerTest {
                 .andExpect(MockMvcResultMatchers.jsonPath("$.producoes[0].dt-cadastro", Matchers.is("2020-09-02")))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.producoes[1].dt-cadastro", Matchers.is("2020-09-03")));
     }
+
+    @Test
+    public void deveRetornarProducaoDoDiaPelaAreaDoProdutor() throws Exception {
+        mvc.perform(
+                MockMvcRequestBuilders.get("/produtor-rural/{inscricao}/producao/por-hectare", "987654321")
+                        .param("data", "2020-09-02")
+        )
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.jsonPath("$.producao", Matchers.is(1.67)));
+    }
+
+    @Test
+    public void deveRetornarErroAoInformarProdutorNaoCadastrado() throws Exception {
+        mvc.perform(
+                MockMvcRequestBuilders.get("/produtor-rural/{inscricao}/producao/por-hectare", "3")
+                        .param("data", "2020-09-02")
+        )
+                .andExpect(MockMvcResultMatchers.status().isNotFound());
+    }
+
+    @Test
+    public void deveRetornarZeroQuandoNaoHouverProducaoNoDia() throws Exception {
+        mvc.perform(
+                MockMvcRequestBuilders.get("/produtor-rural/{inscricao}/producao/por-hectare", "987654321")
+                        .param("data", "0000-01-01")
+        )
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.jsonPath("$.producao", Matchers.is(0.00)));
+    }
+
+
 }

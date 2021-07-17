@@ -1,6 +1,7 @@
 package com.welyab.teste.programador.springboottestebasico.application.repositories;
 
 import com.welyab.teste.programador.springboottestebasico.application.repositories.tabelas.TProducao;
+import com.welyab.teste.programador.springboottestebasico.application.repositories.tabelas.TProdutoProdutor;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
@@ -44,6 +45,7 @@ public class ProducaoRepository {
                 " FROM APL_TEST.TAB_PRODUCAO P " +
                 " WHERE P.ID_PRODUTOR_RURAL = :idProdutorRural " +
                 " AND P.DT_CADASTRO >= :dataInicio " +
+                " AND P.DT_CADASTRO <= :dataFim " +
                 " ORDER BY P.DT_CADASTRO ";
 
         MapSqlParameterSource parametros = new MapSqlParameterSource();
@@ -57,4 +59,6 @@ public class ProducaoRepository {
                 BeanPropertyRowMapper.newInstance(TProducao.class)
         );
     }
+
+
 }

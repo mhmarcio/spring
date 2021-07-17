@@ -1,9 +1,11 @@
 package com.welyab.teste.programador.springboottestebasico.application.web.response;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.welyab.teste.programador.springboottestebasico.core.model.Produto;
 
 public class ProdutoResponse {
 
+    @JsonProperty("code")
     private String id;
     private String nome;
 
